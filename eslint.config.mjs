@@ -28,7 +28,6 @@ const eslintConfig = [
       "no-unused-vars": ["warn", { argsIgnorePattern: "^_", varsIgnorePattern: "^_" }],
       "no-multiple-empty-lines": ["error", { max: 1, maxEOF: 0, maxBOF: 0 }],
       'no-console': process.env.NODE_ENV === 'production' ? 'warn' : 'off',
-      'semi': ['error', 'always'],
       'quotes': 'off', // handled by Prettier
       'indent': 'off', // handled by Prettier
 
