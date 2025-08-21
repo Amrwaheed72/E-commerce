@@ -1,4 +1,4 @@
-import { fetchProducts } from './services/api';
+import { fetchProducts } from './_services/api';
 
 export default async function Home() {
   const products = await fetchProducts();

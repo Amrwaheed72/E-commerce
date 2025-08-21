@@ -11,7 +11,6 @@ export default function SearchContainer({ onSearch }) {
     const handleSubmit = (e) => {
         e.preventDefault();
         if (onSearch) { onSearch(query) };
-        // else just reset for demo:
         console.log("Search submitted:", query);
     };
 
