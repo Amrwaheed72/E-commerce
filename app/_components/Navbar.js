@@ -6,10 +6,13 @@ import SearchContainer from "./SearchContainer"
 import Link from "next/link"
 import { usePathname } from "next/navigation"
 import Logo from "./Logo"
+import CartIcon from "./CartIcon"
+import WishList from "./WishList"
+import NavList from "./NavList"
 
 const links = [
     {
-        link: '/home',
+        link: '/',
         label: 'Home'
     },
     {
@@ -28,9 +31,15 @@ const links = [
 const Navbar = () => {
     const pathname = usePathname()
     return (
-        <div className="p-4 flex justify-between items-center gap-40 border-b-1">
-            <Logo />
-            <div className="flex gap-8 text-xl font-semibold">
+        <div className="w-full px-6 py-4 flex items-center justify-between border-b">
+            <div className="flex items-center gap-4">
+                <Logo />
+                {/* <div className="block xl:hidden">
+                    <NavList />
+                </div> */}
+            </div>
+
+            <div className=" gap-6 text-xs md:text-sm lg:text-xl font-semibold hidden xl:flex">
                 {links.map((link, i) => (
                     <Link
                         href={link.link}
@@ -42,21 +51,26 @@ const Navbar = () => {
                     >
                         {link.label}
                         <span
-                            className={`absolute left-0 -bottom-6 h-[2px] bg-black dark:bg-white transition-all duration-300 ${pathname === link.link ? "w-full" : "w-0 group-hover:w-full"
+                            className={`absolute left-0 -bottom-1 h-[2px] bg-black dark:bg-white transition-all duration-300 ${pathname === link.link ? "w-full" : "w-0 group-hover:w-full"
                                 }`}
                         />
                     </Link>
                 ))}
             </div>
-            <div>
+
+            <div className="">
                 <SearchContainer />
             </div>
-            <div className="flex justify-end items-center gap-2">
+
+            <div className="hidden xl:flex items-center gap-3">
+                <WishList />
+                <CartIcon />
                 <ModeToggle />
                 <LangToggle />
                 <ProfileIcon />
             </div>
         </div>
+
     )
 }
 

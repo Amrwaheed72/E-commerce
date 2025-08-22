@@ -1,5 +1,6 @@
 "use client";
 
+import { useMediaQuery } from "react-responsive"
 import { Search } from "lucide-react";
 import { useState } from "react";
 import { motion } from "framer-motion";
@@ -7,7 +8,8 @@ import { motion } from "framer-motion";
 export default function SearchContainer({ onSearch }) {
     const [query, setQuery] = useState("");
     const [focused, setFocused] = useState(false);
-
+    const isDesktop = useMediaQuery({ minWidth: 1024 }) // lg breakpoint
+    const isTablet = useMediaQuery({ minWidth: 640, maxWidth: 1023 })
     const handleSubmit = (e) => {
         e.preventDefault();
         if (onSearch) { onSearch(query) };
@@ -23,7 +25,19 @@ export default function SearchContainer({ onSearch }) {
                 placeholder="Search products..."
                 onFocus={() => setFocused(true)}
                 onBlur={() => setFocused(false)}
-                animate={{ width: focused ? '25rem' : '15rem' }}
+                animate={{
+                    width: focused
+                        ? isDesktop
+                            ? "25rem"
+                            : isTablet
+                                ? "20rem"
+                                : "15rem"
+                        : isDesktop
+                            ? "15rem"
+                            : isTablet
+                                ? "10rem"
+                                : "5rem",
+                }}
                 className=" w-full pr-4 pl-10 py-2 rounded-full border border-gray-300 focus:border-gray-500 focus:outline-none shadow-sm transition dark:bg-gray-800 dark:border-gray-600 dark:placeholder:text-gray-400 dark:focus:border-gray-400
         "
                 aria-label="Search"

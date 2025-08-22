@@ -1,7 +1,8 @@
-import { Geist, Geist_Mono, Inter, Outfit, Roboto } from "next/font/google";
+import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import { ThemeProvider } from "./_components/ThemeProvider";
 import Navbar from "./_components/Navbar";
+import MobileNavbar from "./_components/MobileNavbar";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -31,6 +32,7 @@ export default function RootLayout({ children }) {
           disableTransitionOnChange
         >
           <Navbar />
+          <MobileNavbar />
           <main>
             {children}
           </main>
