@@ -9,7 +9,7 @@ const Logo = () => {
     return (
         <Tooltip>
             <TooltipTrigger>
-                <Link href="/" className="flex items-center gap-4 z-10">
+                <Link href="/home" className="flex items-center gap-4 z-10">
                     <div className=" text-2xl lg:text-4xl font-semibold flex justify-center items-center gap-2">
                         <ShoppingBasket size={40} />
                         <p>{t("logo")}</p>

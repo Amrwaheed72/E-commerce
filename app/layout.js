@@ -34,7 +34,7 @@ export default function RootLayout({ children }) {
             enableSystem
             disableTransitionOnChange
           >
-            <HomeNavbar />
+            {/* <HomeNavbar /> */}
             <main>
               {children}
             </main>

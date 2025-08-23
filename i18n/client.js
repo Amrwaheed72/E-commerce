@@ -15,7 +15,7 @@ i18n
         debug: process.env.NODE_ENV === 'development', // Set to true to see logs
 
         // Define the namespaces you're using
-        ns: ['common', 'navbar'],
+        ns: ['common', 'navbar', 'landing_page'],
         defaultNS: 'common',
 
         // Configuration for language detector

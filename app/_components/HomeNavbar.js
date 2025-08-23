@@ -13,7 +13,7 @@ const HomeNavbar = () => {
     const pathname = usePathname()
     const links = [
         {
-            link: '/',
+            link: '/home',
             label: "home_page"
         },
         {

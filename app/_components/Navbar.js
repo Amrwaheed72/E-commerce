@@ -12,32 +12,13 @@ import { useTranslation } from "react-i18next"
 const Navbar = () => {
     const pathname = usePathname()
     const { t } = useTranslation('navbar')
-
-    const links = [
-        {
-            link: '/',
-            label: "home_page"
-        },
-        {
-            link: '/browseProducts',
-            label: "browse_products"
-        },
-        {
-            link: '/about',
-            label: "about_us"
-        },
-        {
-            link: '/contact',
-            label: "contact_us"
-        },
-    ]
     return (
         <div className="w-full px-6 py-4 flex items-center justify-between border-b">
             <div className="flex items-center gap-4">
                 <Logo />
             </div>
 
-            <div className=" gap-6 text-xs md:text-sm lg:text-xl font-semibold hidden xl:flex">
+            {/* <div className=" gap-6 text-xs md:text-sm lg:text-xl font-semibold hidden xl:flex">
                 {links.map((link, i) => (
                     <Link
                         href={link.link}
@@ -54,7 +35,7 @@ const Navbar = () => {
                         />
                     </Link>
                 ))}
-            </div>
+            </div> */}
 
             <div className="">
                 <SearchContainer />
