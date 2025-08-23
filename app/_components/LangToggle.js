@@ -1,3 +1,4 @@
+'use client'
 import {
     DropdownMenu,
     DropdownMenuContent,
@@ -6,8 +7,15 @@ import {
 } from "@/components/ui/dropdown-menu"
 import { Button } from "@/components/ui/button"
 import { Globe } from "lucide-react"
+import { useTranslation } from "react-i18next";
 
 const LangToggle = () => {
+    const { i18n } = useTranslation();
+
+    const changeLanguage = (lng) => {
+        i18n.changeLanguage(lng);
+    };
+
     return (
         <DropdownMenu>
             <DropdownMenuTrigger asChild>
@@ -16,10 +24,10 @@ const LangToggle = () => {
                 </Button>
             </DropdownMenuTrigger>
             <DropdownMenuContent align="end">
-                <DropdownMenuItem>
+                <DropdownMenuItem onClick={() => changeLanguage('ar')} >
                     العربية
                 </DropdownMenuItem>
-                <DropdownMenuItem >
+                <DropdownMenuItem onClick={() => changeLanguage('en')}  >
                     English
                 </DropdownMenuItem>
             </DropdownMenuContent>

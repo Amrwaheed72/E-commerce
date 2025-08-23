@@ -4,7 +4,7 @@ import WishList from "./WishList"
 
 const MobileNavbar = () => {
     return (
-        <div className="border-t-2 w-full fixed bottom-0 p-4">
+        <div className="block md:hidden border-t-2 w-full fixed bottom-0 p-4">
             <div className="flex justify-between items-center">
                 <CartIcon />
                 <WishList />

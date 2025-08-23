@@ -1,8 +1,8 @@
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import { ThemeProvider } from "./_components/ThemeProvider";
-import Navbar from "./_components/Navbar";
-import MobileNavbar from "./_components/MobileNavbar";
+import HomeNavbar from "./_components/HomeNavbar";
+import { I18nProvider } from "./i18n-provider"; // <-- 1. IMPORT THE PROVIDER
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -21,22 +21,25 @@ export const metadata = {
 
 export default function RootLayout({ children }) {
   return (
-    <html lang="en" suppressHydrationWarning>
+    // The lang="en" is removed, as our provider now handles it dynamically
+    <html suppressHydrationWarning>
       <body
         className={` ${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-        <ThemeProvider
-          attribute="class"
-          defaultTheme="system"
-          enableSystem
-          disableTransitionOnChange
-        >
-          <Navbar />
-          <MobileNavbar />
-          <main>
-            {children}
-          </main>
-        </ThemeProvider>
+        {/* 2. WRAP YOUR COMPONENTS WITH THE PROVIDER */}
+        <I18nProvider>
+          <ThemeProvider
+            attribute="class"
+            defaultTheme="system"
+            enableSystem
+            disableTransitionOnChange
+          >
+            <HomeNavbar />
+            <main>
+              {children}
+            </main>
+          </ThemeProvider>
+        </I18nProvider>
       </body>
     </html>
   );

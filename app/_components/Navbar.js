@@ -8,35 +8,33 @@ import { usePathname } from "next/navigation"
 import Logo from "./Logo"
 import CartIcon from "./CartIcon"
 import WishList from "./WishList"
-import NavList from "./NavList"
-
-const links = [
-    {
-        link: '/',
-        label: 'Home'
-    },
-    {
-        link: '/products',
-        label: 'Browse Products'
-    },
-    {
-        link: '/about',
-        label: 'About Us'
-    },
-    {
-        link: '/contact',
-        label: 'Contact Us'
-    },
-]
+import { useTranslation } from "react-i18next"
 const Navbar = () => {
     const pathname = usePathname()
+    const { t } = useTranslation('navbar')
+
+    const links = [
+        {
+            link: '/',
+            label: "home_page"
+        },
+        {
+            link: '/browseProducts',
+            label: "browse_products"
+        },
+        {
+            link: '/about',
+            label: "about_us"
+        },
+        {
+            link: '/contact',
+            label: "contact_us"
+        },
+    ]
     return (
         <div className="w-full px-6 py-4 flex items-center justify-between border-b">
             <div className="flex items-center gap-4">
                 <Logo />
-                {/* <div className="block xl:hidden">
-                    <NavList />
-                </div> */}
             </div>
 
             <div className=" gap-6 text-xs md:text-sm lg:text-xl font-semibold hidden xl:flex">
@@ -49,7 +47,7 @@ const Navbar = () => {
                             : "text-gray-700 dark:text-gray-300 hover:text-black dark:hover:text-white"
                             }`}
                     >
-                        {link.label}
+                        {t(link.label)}
                         <span
                             className={`absolute left-0 -bottom-1 h-[2px] bg-black dark:bg-white transition-all duration-300 ${pathname === link.link ? "w-full" : "w-0 group-hover:w-full"
                                 }`}

@@ -7,7 +7,7 @@ const WishList = () => {
     return (
         <Link href='/wishlist'>
             <Tooltip>
-                <TooltipTrigger>
+                <TooltipTrigger asChild>
                     <Button variant='outline' size='icon'>
                         <HeartPlus />
                     </Button>
