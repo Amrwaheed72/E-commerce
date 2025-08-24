@@ -12,6 +12,20 @@ export async function fetchProducts() {
     }
 }
 
+export async function getCategories() {
+    try {
+        const response = await fetch('https://dummyjson.com/products/categories');
+        if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+        }
+
+        const data = await response.json();
+        return data
+    } catch (error) {
+        console.error("Failed to fetch products:", error);
+    }
+}
+
 export async function getCategoriesWithImages() {
     try {
         // 1. Fetch categories
@@ -21,11 +35,9 @@ export async function getCategoriesWithImages() {
         }
 
         const data = await res.json();
-        const first12 = data.slice(0, 12); // categories already in array form
-
         // 2. Fetch one product image for each category
         const categoriesWithImages = await Promise.all(
-            first12.map(async (category) => {
+            data.map(async (category) => {
                 try {
                     const prodRes = await fetch(category.url + "?limit=1"); // fetch first product
                     const prodData = await prodRes.json();
@@ -41,8 +53,6 @@ export async function getCategoriesWithImages() {
                 }
             })
         );
-
-        console.log(categoriesWithImages);
         return categoriesWithImages;
     } catch (error) {
         console.error("Failed to fetch categories:", error.message);
