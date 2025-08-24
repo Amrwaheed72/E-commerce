@@ -11,23 +11,20 @@ i18n
     .use(initReactI18next) // Passes i18n instance to react-i18next
     .init({
         supportedLngs: ['en', 'ar'],
-        fallbackLng: 'en',
-        debug: process.env.NODE_ENV === 'development', // Set to true to see logs
-
-        // Define the namespaces you're using
+        fallbackLng: 'ar',
+        debug: process.env.NODE_ENV === 'development',
         ns: ['common', 'navbar', 'landing_page'],
         defaultNS: 'common',
-
-        // Configuration for language detector
         detection: {
             order: ['cookie', 'localStorage', 'navigator', 'htmlTag'],
             caches: ['cookie', 'localStorage'],
         },
-
-        // Configuration for the backend
         backend: {
-            loadPath: '/locales/{{lng}}/{{ns}}.json',
+            loadPath: '/locales/{{lng}}/{{ns}}.json', // Make sure this path is correct
         },
+        react: {
+            useSuspense: false // Add this to prevent hydration issues
+        }
     });
 
 export default i18n;

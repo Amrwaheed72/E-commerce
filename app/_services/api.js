@@ -11,3 +11,40 @@ export async function fetchProducts() {
         console.error("Failed to fetch products:", error);
     }
 }
+
+export async function getCategoriesWithImages() {
+    try {
+        // 1. Fetch categories
+        const res = await fetch("https://dummyjson.com/products/categories");
+        if (!res.ok) {
+            throw new Error(`HTTP error! Status: ${res.status}`);
+        }
+
+        const data = await res.json();
+        const first12 = data.slice(0, 12); // categories already in array form
+
+        // 2. Fetch one product image for each category
+        const categoriesWithImages = await Promise.all(
+            first12.map(async (category) => {
+                try {
+                    const prodRes = await fetch(category.url + "?limit=1"); // fetch first product
+                    const prodData = await prodRes.json();
+                    const image = prodData.products?.[0]?.images?.[0] || null;
+
+                    return {
+                        ...category,
+                        image,
+                    };
+                } catch (err) {
+                    console.error(`Failed to fetch image for ${category.name}`, err);
+                    return { ...category, image: null };
+                }
+            })
+        );
+
+        console.log(categoriesWithImages);
+        return categoriesWithImages;
+    } catch (error) {
+        console.error("Failed to fetch categories:", error.message);
+    }
+}

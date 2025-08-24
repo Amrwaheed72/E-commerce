@@ -7,6 +7,7 @@ import { ModeToggle } from "./ModeToggle"
 import LangToggle from "./LangToggle"
 import { useTranslation } from "react-i18next"
 import ProfileIcon from "./ProfileIcon"
+import { Headset, House, ShieldQuestionMark, ShoppingCart } from "lucide-react"
 
 const HomeNavbar = () => {
     const { t } = useTranslation('navbar')
@@ -14,19 +15,23 @@ const HomeNavbar = () => {
     const links = [
         {
             link: '/home',
-            label: "home_page"
+            label: "home_page",
+            icon: <House className="w-4 h-4 lg:w-5 lg:h-5" />
         },
         {
             link: '/browseProducts',
-            label: "browse_products"
+            label: "browse_products",
+            icon: <ShoppingCart className="w-4 h-4 lg:w-5 lg:h-5" />
         },
         {
             link: '/about',
-            label: "about_us"
+            label: "about_us",
+            icon: <ShieldQuestionMark className="w-4 h-4 lg:w-5 lg:h-5" />
         },
         {
             link: '/contact',
-            label: "contact_us"
+            label: "contact_us",
+            icon: <Headset className="w-4 h-4 lg:w-5 lg:h-5" />
         },
     ]
     return (
@@ -41,12 +46,15 @@ const HomeNavbar = () => {
                         <Link
                             href={link.link}
                             key={i}
-                            className={`relative group transition-colors ${pathname === link.link
+                            className={`relative group transition-colors text-xs lg:text-sm ${pathname === link.link
                                 ? "text-black dark:text-white"
                                 : "text-gray-700 dark:text-gray-300 hover:text-black dark:hover:text-white"
                                 }`}
                         >
-                            {t(link.label)}
+                            <span className="flex items-center justify-center gap-2">
+                                {t(link.label)}
+                                {link.icon}
+                            </span>
                             <span
                                 className={`absolute left-0 -bottom-1 h-[2px] bg-black dark:bg-white transition-all duration-300 ${pathname === link.link ? "w-full" : "w-0 group-hover:w-full"
                                     }`}

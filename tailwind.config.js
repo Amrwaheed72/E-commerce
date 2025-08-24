@@ -7,9 +7,16 @@ module.exports = {
     ],
     theme: {
         extend: {
-
+            fontFamily: {
+                sans: ["var(--font-roboto)", "system-ui", "sans-serif"],
+                arabic: ["var(--font-cairo)", "system-ui", "sans-serif"],
+            },
         },
     },
+    safelist: [
+        'font-sans',
+        'font-arabic'
+    ],
     plugins: [],
-    darkMode: "class", // 👈 add this
+    darkMode: "class",
 };

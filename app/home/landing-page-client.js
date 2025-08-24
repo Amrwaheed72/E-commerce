@@ -1,10 +1,9 @@
-// app/landing-page-client.js
 'use client';
 
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
-import { Truck, ShieldCheck, Headset, Cpu, BatteryCharging, Camera } from "lucide-react";
+import { Truck, ShieldCheck, Headset, Cpu, BatteryCharging, Camera, ChevronRight, ArrowRight, ArrowLeft, ChevronLeft } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import { AnimatePresence, motion, useScroll, useTransform } from "framer-motion";
@@ -28,12 +27,12 @@ const staggerContainer = {
 };
 
 // Main Client Component
-export function LandingPageClient() {
+export function LandingPageClient({ categories }) {
     return (
         <div className="flex flex-col min-h-screen bg-background text-foreground">
             <main className="flex-grow">
                 <HeroSection />
-                <CategoriesSection />
+                <CategoriesSection categories={categories} />
                 <ShopByLifestyleSection /> {/* <-- NEW SECTION */}
                 <FeaturedProductsSection />
                 <ProductSpotlightSection /> {/* <-- NEW SECTION */}
@@ -77,7 +76,7 @@ const HeroSection = () => {
         exit: { opacity: 0, transition: { duration: 0.75, ease: "easeInOut" } },
     };
     return (
-        <section className="w-[90%] mt-5 mx-auto relative h-[70vh] md:h-[90vh] flex items-center justify-center text-center text-white overflow-hidden">
+        <section className="mx-auto relative h-[70vh] md:h-[90vh] flex items-center justify-center text-center text-white overflow-hidden">
             <AnimatePresence>
                 <motion.div
                     // 5. A unique key is crucial for AnimatePresence to track the element
@@ -91,9 +90,8 @@ const HeroSection = () => {
                     <Image
                         src={images[currentImageIndex]}
                         alt="Modern electronics on a desk"
-                        layout="fill"
-                        objectFit="cover"
-                        className="brightness-[0.4]"
+                        fill
+                        className="brightness-[0.4] object-cover"
                     // placeholder="blur"
                     // fill
                     />
@@ -102,10 +100,8 @@ const HeroSection = () => {
 
             <div className="absolute inset-0 bg-black/20 z-10"></div>
 
-            {/* The text content remains on top */}
             <motion.div
                 className="relative z-20 p-4"
-                // These animations make the text re-animate slightly on image change
                 initial={{ opacity: 0.8 }}
                 animate={{ opacity: 1 }}
                 transition={{ duration: 1.5 }}
@@ -124,51 +120,104 @@ const HeroSection = () => {
     );
 };
 
-// Categories Section Component (Unchanged)
-const CategoriesSection = () => {
-    // ... same as before
-    const categories = [
-        { name: "Smartphones", image: "https://picsum.photos/seed/smartphones/600/800" },
-        { name: "Laptops & Tablets", image: "https://picsum.photos/seed/laptops/600/800" },
-        { name: "Audio Devices", image: "https://picsum.photos/seed/audio/600/800" },
-        { name: "Accessories", image: "https://picsum.photos/seed/accessories/600/800" },
-    ];
+export const CategoriesSection = ({ categories }) => {
+    const slideX = {
+        initial: { x: 100, opacity: 0 },
+        animate: { x: 0, opacity: 1 },
+        exit: { x: -100, opacity: 0 },
+        transition: { duration: 0.6, ease: "easeInOut" }
+    };
+    const [page, setPage] = useState(0);
+    const itemsPerPage = 4;
+
+    const totalPages = Math.ceil(categories.length / itemsPerPage);
+
+    const start = page * itemsPerPage;
+    const currentItems = categories.slice(start, start + itemsPerPage);
+
+    const nextPage = () => {
+        setPage((p) => (p + 1) % totalPages);
+    };
+
+    const prevPage = () => {
+        setPage((p) => (p - 1 + totalPages) % totalPages);
+    };
+
+    useEffect(() => {
+        const interval = setInterval(() => {
+            nextPage();
+        }, 3000);
+
+        return () => clearInterval(interval);
+    }, [page, totalPages]);
 
     return (
         <section className="py-16 md:py-24 bg-background">
             <div className="container mx-auto px-4 flex flex-col gap-12">
-                <motion.h1 variants={fadeIn} className="text-3xl mx-auto md:text-4xl font-bold">Top Categories</motion.h1>
-                <motion.div
-                    className="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-8"
-                    variants={staggerContainer}
-                    initial="initial"
-                    whileInView="whileInView"
+                <motion.h1
+                    className="text-3xl mx-auto md:text-4xl font-bold"
+                    initial={{ opacity: 0, y: 20 }}
+                    whileInView={{ opacity: 1, y: 0 }}
                     viewport={{ once: true }}
                 >
-                    {categories.map((category) => (
-                        <motion.div
-                            key={category.name}
-                            variants={fadeIn}
-                            whileHover={{ y: -10, scale: 1.03 }}
-                            className="group"
-                        >
-                            <Link href="#">
-                                <Card className="overflow-hidden border-2 border-transparent transition-colors group-hover:border-primary">
-                                    <CardContent className="p-0">
-                                        <Image
-                                            src={category.image}
-                                            alt={category.name}
-                                            width={600}
-                                            height={800}
-                                            className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-110"
-                                        />
-                                    </CardContent>
-                                </Card>
-                                <h3 className="mt-4 text-lg font-semibold text-center">{category.name}</h3>
-                            </Link>
-                        </motion.div>
-                    ))}
-                </motion.div>
+                    Top Categories
+                </motion.h1>
+
+                {/* Grid */}
+                <div className="relative">
+                    <div >
+                        <AnimatePresence mode="wait">
+                            <motion.div
+                                key={page} // IMPORTANT: use page index as key
+                                variants={slideX}
+                                initial="initial"
+                                animate="animate"
+                                exit="exit"
+                                className="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-8"
+                            >
+                                {currentItems.map((category) => (
+                                    <motion.div
+                                        key={category.name}
+                                        whileHover={{ y: -10, scale: 1.03 }}
+                                        className="group"
+                                    >
+                                        <Link href="#">
+                                            <Card className="overflow-hidden border-2 border-transparent transition-colors group-hover:border-primary">
+                                                <CardContent className="p-0">
+                                                    <Image
+                                                        src={category.image}
+                                                        alt={category.name}
+                                                        width={600}
+                                                        height={800}
+                                                        className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-110"
+                                                    />
+                                                </CardContent>
+                                            </Card>
+                                            <h3 className="mt-4 text-lg font-semibold text-center">
+                                                {category.name}
+                                            </h3>
+                                        </Link>
+                                    </motion.div>
+                                ))}
+                            </motion.div>
+                        </AnimatePresence>
+
+                    </div>
+
+                    {/* Arrows */}
+                    <button
+                        onClick={prevPage}
+                        className="absolute left-0 top-1/2 -translate-y-1/2 p-3 rounded-full bg-gray-200 dark:bg-gray-700 hover:bg-gray-300 dark:hover:bg-gray-600 transition"
+                    >
+                        <ChevronLeft className="w-6 h-6" />
+                    </button>
+                    <button
+                        onClick={nextPage}
+                        className="absolute right-0 top-1/2 -translate-y-1/2 p-3 rounded-full bg-gray-200 dark:bg-gray-700 hover:bg-gray-300 dark:hover:bg-gray-600 transition"
+                    >
+                        <ChevronRight className="w-6 h-6" />
+                    </button>
+                </div>
             </div>
         </section>
     );
@@ -387,9 +436,8 @@ const BrandStorySection = () => {
                     <Image
                         src="https://picsum.photos/seed/story/1920/1280"
                         alt="Our Workshop"
-                        layout="fill"
-                        objectFit="cover"
-                        className="brightness-50"
+                        fill
+                        className="brightness-50 object-cover"
                     />
                 </motion.div>
             </div>

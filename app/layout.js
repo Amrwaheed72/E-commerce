@@ -1,17 +1,20 @@
-import { Geist, Geist_Mono } from "next/font/google";
+import { Cairo, Roboto } from "next/font/google";
 import "./globals.css";
 import { ThemeProvider } from "./_components/ThemeProvider";
-import HomeNavbar from "./_components/HomeNavbar";
-import { I18nProvider } from "./i18n-provider"; // <-- 1. IMPORT THE PROVIDER
+import { I18nProvider } from "./i18n-provider";
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
+const roboto = Roboto({
   subsets: ["latin"],
+  weight: ["300", "400", "500", "700"],
+  variable: "--font-roboto",
+  display: "swap",
 });
 
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
-  subsets: ["latin"],
+const cairo = Cairo({
+  subsets: ["arabic"],
+  weight: ["300", "400", "500", "700"],
+  variable: "--font-cairo",
+  display: "swap",
 });
 
 export const metadata = {
@@ -21,12 +24,8 @@ export const metadata = {
 
 export default function RootLayout({ children }) {
   return (
-    // The lang="en" is removed, as our provider now handles it dynamically
     <html suppressHydrationWarning>
-      <body
-        className={` ${geistSans.variable} ${geistMono.variable} antialiased`}
-      >
-        {/* 2. WRAP YOUR COMPONENTS WITH THE PROVIDER */}
+      <body className={`${roboto.variable} ${cairo.variable} font-sans antialiased`}>
         <I18nProvider>
           <ThemeProvider
             attribute="class"
@@ -34,10 +33,7 @@ export default function RootLayout({ children }) {
             enableSystem
             disableTransitionOnChange
           >
-            {/* <HomeNavbar /> */}
-            <main>
-              {children}
-            </main>
+            {children}
           </ThemeProvider>
         </I18nProvider>
       </body>

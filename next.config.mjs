@@ -8,10 +8,15 @@ const nextConfig = {
                 port: '',
                 pathname: '/seed/**',
             },
+            // {
+            //     protocol: 'https',
+            //     hostname: 'cdn.dummyjson.com',
+            //     pathname: '/product-images/fragrances/**',
+            // },
             {
                 protocol: 'https',
                 hostname: 'cdn.dummyjson.com',
-                pathname: '/product-images/fragrances/**',
+                pathname: '/product-images/**',
             },
         ],
     },
