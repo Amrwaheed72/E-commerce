@@ -3,15 +3,11 @@ import { ModeToggle } from "./ModeToggle"
 import LangToggle from "./LangToggle"
 import ProfileIcon from "./ProfileIcon"
 import SearchContainer from "./SearchContainer"
-import Link from "next/link"
-import { usePathname } from "next/navigation"
 import Logo from "./Logo"
 import CartIcon from "./CartIcon"
 import WishList from "./WishList"
-import { useTranslation } from "react-i18next"
-const Navbar = () => {
-    const pathname = usePathname()
-    const { t } = useTranslation('navbar')
+import CategoriesList from "./CategoriesList"
+const Navbar = ({ categories }) => {
     return (
         <div className="w-full px-6 py-4 flex items-center justify-between border-b">
             <div className="flex items-center gap-4">
@@ -41,12 +37,13 @@ const Navbar = () => {
                 <SearchContainer />
             </div>
 
-            <div className="hidden xl:flex items-center gap-3">
+            <div className="hidden md:flex items-center gap-3">
                 <WishList />
                 <CartIcon />
-                <ModeToggle />
-                <LangToggle />
+                <CategoriesList categories={categories} />
                 <ProfileIcon />
+                <LangToggle />
+                <ModeToggle />
             </div>
         </div>
 
